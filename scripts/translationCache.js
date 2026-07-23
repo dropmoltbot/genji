@@ -1,5 +1,5 @@
 // TranslationCache - IndexedDB-backed translation cache
-// Clean implementation, no auth/credit logic.
+// IndexedDB translation cache
 // Uses SHA-256 hashing to generate cache keys from image data + settings.
 
 async function sha256(buffer) {

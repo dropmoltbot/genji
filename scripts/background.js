@@ -1,7 +1,7 @@
 // Genji Image Translator - Background Service Worker
 // ===================================================
 // Open-source AI image translator.
-// NO Firebase, NO authentication, NO credits, NO server.
+// 
 // Direct BYOK (Bring Your Own Key) API calls to AI providers.
 //
 // Supported providers: Google (Gemini), OpenAI (GPT), Anthropic (Claude),
@@ -565,131 +565,124 @@ function parseAIResponse(text) {
     return [];
 }
 
+// ─── OffscreenCanvas helpers (Service Worker has no DOM) ─────────────────────
+// Service Workers cannot use document.createElement() or new Image().
+// We use OffscreenCanvas + createImageBitmap() instead.
+async function loadImageFromBase64(imageBase64) {
+    const blob = dataUrlToBlob(imageBase64);
+    const bitmap = await createImageBitmap(blob);
+    return bitmap;
+}
+
 // ─── Canvas-based inpainting (remove original text) ─────────────────────────
-// Since Genji has no server-side inpainting, we do client-side canvas inpainting:
+// Client-side inpainting using OffscreenCanvas (no DOM needed).
 // Fill text regions with the surrounding average color.
 async function inpaintCanvas(imageBase64, textObjects) {
     if (!textObjects || textObjects.length === 0) return imageBase64;
 
-    return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => {
-            const canvas = document.createElement("canvas");
-            canvas.width = img.naturalWidth;
-            canvas.height = img.naturalHeight;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0);
+    try {
+        const bitmap = await loadImageFromBase64(imageBase64);
+        const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(bitmap, 0, 0);
 
-            for (const textObj of textObjects) {
-                if (!textObj.bbox || textObj.bbox.length < 4) continue;
+        for (const textObj of textObjects) {
+            if (!textObj.bbox || textObj.bbox.length < 4) continue;
 
-                const [x, y, w, h] = textObj.bbox;
-                // Sample surrounding pixels for average color
-                const padding = Math.max(w, h) * 0.3;
-                const sampleX = Math.max(0, Math.floor(x - padding));
-                const sampleY = Math.max(0, Math.floor(y - padding));
-                const sampleW = Math.min(canvas.width - sampleX, Math.ceil(w + padding * 2));
-                const sampleH = Math.min(canvas.height - sampleY, Math.ceil(h + padding * 2));
+            const [x, y, w, h] = textObj.bbox;
+            const padding = Math.max(w, h) * 0.3;
 
-                try {
-                    const sampleData = ctx.getImageData(
-                        Math.max(0, sampleX),
-                        Math.max(0, sampleY - padding - h),
-                        Math.min(canvas.width, sampleW),
-                        Math.max(1, Math.floor(h * 0.3))
-                    );
-                    const pixels = sampleData.data;
-                    let r = 0, g = 0, b = 0, count = 0;
-                    for (let i = 0; i < pixels.length; i += 4) {
-                        r += pixels[i]; g += pixels[i + 1]; b += pixels[i + 2]; count++;
-                    }
-                    if (count > 0) {
-                        r = Math.round(r / count);
-                        g = Math.round(g / count);
-                        b = Math.round(b / count);
-                    }
-
-                    // Fill the text region with average color
-                    ctx.fillStyle = `rgb(${r},${g},${b})`;
-                    ctx.fillRect(Math.floor(x), Math.floor(y), Math.ceil(w), Math.ceil(h));
-                } catch (e) {
-                    // If getImageData fails (CORS), fill with white
-                    ctx.fillStyle = "#ffffff";
-                    ctx.fillRect(Math.floor(x), Math.floor(y), Math.ceil(w), Math.ceil(h));
+            try {
+                const sampleData = ctx.getImageData(
+                    Math.max(0, Math.floor(x - padding)),
+                    Math.max(0, Math.floor(y - padding - h)),
+                    Math.min(canvas.width, Math.ceil(w + padding * 2)),
+                    Math.max(1, Math.floor(h * 0.3))
+                );
+                const pixels = sampleData.data;
+                let r = 0, g = 0, b = 0, count = 0;
+                for (let i = 0; i < pixels.length; i += 4) {
+                    r += pixels[i]; g += pixels[i + 1]; b += pixels[i + 2]; count++;
                 }
+                if (count > 0) {
+                    r = Math.round(r / count);
+                    g = Math.round(g / count);
+                    b = Math.round(b / count);
+                }
+                ctx.fillStyle = `rgb(${r},${g},${b})`;
+                ctx.fillRect(Math.floor(x), Math.floor(y), Math.ceil(w), Math.ceil(h));
+            } catch (e) {
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(Math.floor(x), Math.floor(y), Math.ceil(w), Math.ceil(h));
             }
+        }
 
-            resolve(canvas.toDataURL("image/jpeg", 0.92));
-        };
-        img.onerror = () => resolve(imageBase64);
-        img.src = imageBase64;
-    });
+        const outBlob = await canvas.convertToBlob({ type: "image/jpeg", quality: 0.92 });
+        return await blobToImage(outBlob);
+    } catch (e) {
+        console.warn("[Genji] Inpaint OffscreenCanvas failed, returning original", e);
+        return imageBase64;
+    }
 }
 
 // ─── Render translated text onto the inpainted image ─────────────────────────
-async function renderTranslatedImage(inpaintedBase64, textObjects, settings, imageWidth, imageHeight) {
-    return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => {
-            const canvas = document.createElement("canvas");
-            canvas.width = img.naturalWidth;
-            canvas.height = img.naturalHeight;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0);
+// Uses OffscreenCanvas (Service Worker compatible, no DOM needed).
+async function renderTranslatedImage(inpaintedBase64, textObjects, settings) {
+    try {
+        const bitmap = await loadImageFromBase64(inpaintedBase64);
+        const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(bitmap, 0, 0);
 
-            const font = mapFontName(settings.genji_font || "wildwords");
-            const minFontSize = parseInt(settings.genji_min_font_size) || 6;
-            const strokeEnabled = settings.genji_stroke_enabled !== false;
-            const textAlign = settings.genji_text_alignment || "auto";
+        const font = mapFontName(settings.genji_font || "wildwords");
+        const minFontSize = parseInt(settings.genji_min_font_size) || 6;
+        const strokeEnabled = settings.genji_stroke_enabled !== false;
+        const textAlign = settings.genji_text_alignment || "auto";
 
-            for (const textObj of textObjects) {
-                if (!textObj.translated || !textObj.bbox || textObj.bbox.length < 4) continue;
+        for (const textObj of textObjects) {
+            if (!textObj.translated || !textObj.bbox || textObj.bbox.length < 4) continue;
 
-                const [x, y, w, h] = textObj.bbox;
-                const color = textObj.color || "#000000";
-                const isVertical = textObj.is_vertical || false;
+            const [x, y, w, h] = textObj.bbox;
+            const color = textObj.color || "#000000";
+            const isVertical = textObj.is_vertical || false;
 
-                // Auto-fit font size to bounding box
-                let fontSize = Math.max(minFontSize, Math.min(h * 0.85, w * 0.8));
-                ctx.font = `${fontSize}px ${font}`;
-                ctx.textBaseline = "top";
-                ctx.fillStyle = color;
+            let fontSize = Math.max(minFontSize, Math.min(h * 0.85, w * 0.8));
+            ctx.font = `${fontSize}px ${font}`;
+            ctx.textBaseline = "top";
+            ctx.fillStyle = color;
 
-                if (strokeEnabled) {
-                    ctx.strokeStyle = getContrastColor(color);
-                    ctx.lineWidth = Math.max(1, fontSize * 0.12);
-                    ctx.lineJoin = "round";
-                    ctx.miterLimit = 2;
-                }
-
-                const align = textAlign === "auto" ? (isVertical ? "right" : "center") : textAlign;
-                ctx.textAlign = align;
-
-                let textX = x;
-                if (align === "center") textX = x + w / 2;
-                else if (align === "right") textX = x + w;
-
-                // Wrap text to fit width
-                const maxWidth = w;
-                const lines = wrapText(ctx, textObj.translated, maxWidth);
-
-                const lineHeight = fontSize * 1.15;
-                let textY = y;
-
-                for (const line of lines) {
-                    if (strokeEnabled) {
-                        ctx.strokeText(line, textX, textY);
-                    }
-                    ctx.fillText(line, textX, textY);
-                    textY += lineHeight;
-                }
+            if (strokeEnabled) {
+                ctx.strokeStyle = getContrastColor(color);
+                ctx.lineWidth = Math.max(1, fontSize * 0.12);
+                ctx.lineJoin = "round";
+                ctx.miterLimit = 2;
             }
 
-            resolve(canvas.toDataURL("image/jpeg", 0.92));
-        };
-        img.onerror = () => resolve(inpaintedBase64);
-        img.src = inpaintedBase64;
-    });
+            const align = textAlign === "auto" ? (isVertical ? "right" : "center") : textAlign;
+            ctx.textAlign = align;
+
+            let textX = x;
+            if (align === "center") textX = x + w / 2;
+            else if (align === "right") textX = x + w;
+
+            const maxWidth = w;
+            const lines = wrapText(ctx, textObj.translated, maxWidth);
+            const lineHeight = fontSize * 1.15;
+            let textY = y;
+
+            for (const line of lines) {
+                if (strokeEnabled) ctx.strokeText(line, textX, textY);
+                ctx.fillText(line, textX, textY);
+                textY += lineHeight;
+            }
+        }
+
+        const outBlob = await canvas.convertToBlob({ type: "image/jpeg", quality: 0.92 });
+        return await blobToImage(outBlob);
+    } catch (e) {
+        console.warn("[Genji] Text rendering OffscreenCanvas failed, using inpainted", e);
+        return inpaintedBase64;
+    }
 }
 
 function mapFontName(fontKey) {

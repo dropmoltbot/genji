@@ -1,6 +1,6 @@
 // Genji Image Translator - Popup Logic
 // =====================================
-// No login, no auth, no credits. Direct BYOK key storage in chrome.storage.
+// 
 // built by dropxtor - MIT License
 
 import { TranslationCache } from "../scripts/translationCache.js"
@@ -75,7 +75,7 @@ let currentPage = 1;
 let hasNextPage = false;
 const RECENT_LIMIT = 6;
 
-// Models (no credits — BYOK only)
+// AI models (BYOK)
 const defaultModels = [
     { value: "gemini-3.1-flash-lite", text: "Gemini 3.1 Flash Lite", provider: "google" },
     { value: "deepseek",             text: "DeepSeek V4 Flash",     provider: "deepseek" },
@@ -87,7 +87,7 @@ const defaultModels = [
     { value: "gemini-3.5-flash",     text: "Gemini 3.5 Flash",      provider: "google" }
 ];
 
-// Languages (same as Torii)
+// Languages 
 const languages = {
     af:"Afrikaans",sq:"Albanian",am:"Amharic",ar:"Arabic",hy:"Armenian",as:"Assamese",ay:"Aymara",az:"Azerbaijani",
     bm:"Bambara",eu:"Basque",be:"Belarusian",bn:"Bengali",bho:"Bhojpuri",bs:"Bosnian",bg:"Bulgarian",ca:"Catalan",

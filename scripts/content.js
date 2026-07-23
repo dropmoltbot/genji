@@ -2,7 +2,7 @@
 // Genji Image Translator - Content Script
 // ============================================================================
 // Open-source AI image translator.
-// NO Firebase, NO auth, NO credits. Direct BYOK API calls.
+// 
 // Image detection → overlay → OCR → translate → inpaint → render text.
 //
 // built by dropxtor - MIT License
