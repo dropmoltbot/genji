@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="g">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="24" fill="#0a0a0a"/>
+  <g filter="url(#g)">
+    <ellipse cx="64" cy="58" rx="32" ry="38" fill="#111" stroke="#00ff41" stroke-width="2"/>
+    <ellipse cx="52" cy="50" rx="6" ry="5" fill="#00ff41"/>
+    <ellipse cx="52" cy="50" rx="2.5" ry="3.5" fill="#0a0a0a"/>
+    <circle cx="53" cy="49" r="1.2" fill="#fff"/>
+    <ellipse cx="76" cy="50" rx="6" ry="5" fill="#00ff41"/>
+    <ellipse cx="76" cy="50" rx="2.5" ry="3.5" fill="#0a0a0a"/>
+    <circle cx="77" cy="49" r="1.2" fill="#fff"/>
+    <path d="M 42 72 Q 64 78 86 72 L 86 84 Q 64 88 42 84 Z" fill="#1a1a1a" stroke="#00ff41" stroke-width="1.5"/>
+    <path d="M 44 44 Q 64 34 84 44" stroke="#00ff41" stroke-width="3" fill="none"/>
+    <rect x="40" y="36" width="48" height="6" rx="2" fill="#1a1a1a" stroke="#00ff41" stroke-width="1.5"/>
+  </g>
+  <text x="64" y="115" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#00ff41">G</text>
+</svg>

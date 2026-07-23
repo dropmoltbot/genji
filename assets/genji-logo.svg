@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="480" height="480">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff41;stop-opacity:1"/>
+      <stop offset="50%" style="stop-color:#00d4ff;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#ff00ff;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#f7c948;stop-opacity:1"/>
+    </linearGradient>
+    <style>
+      @keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+      @keyframes pulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
+      @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+      @keyframes blink { 0%, 90%, 100% { opacity: 1; } 95% { opacity: 0; } }
+      @keyframes textGlow { 0%, 100% { filter: url(#glow); opacity: 0.9; } 50% { opacity: 1; } }
+      @keyframes cornerPulse { 0%, 100% { stroke-opacity: 0.3; } 50% { stroke-opacity: 0.8; } }
+      .scanline { animation: scanline 4s linear infinite; }
+      .pulse { animation: pulse 2s ease-in-out infinite; }
+      .float { animation: float 3s ease-in-out infinite; }
+      .blink { animation: blink 4s infinite; }
+      .text-glow { animation: textGlow 2s ease-in-out infinite; }
+      .corner { animation: cornerPulse 2s ease-in-out infinite; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="480" height="480" fill="#0a0a0a"/>
+
+  <!-- Scanlines -->
+  <g opacity="0.06">
+    <line x1="0" y1="0" x2="480" y2="0" stroke="#00ff41" stroke-width="1" class="scanline"/>
+    <line x1="0" y1="120" x2="480" y2="120" stroke="#00ff41" stroke-width="1"/>
+    <line x1="0" y1="240" x2="480" y2="240" stroke="#00ff41" stroke-width="1"/>
+    <line x1="0" y1="360" x2="480" y2="360" stroke="#00ff41" stroke-width="1"/>
+    <line x1="0" y1="479" x2="480" y2="479" stroke="#00ff41" stroke-width="1"/>
+  </g>
+
+  <!-- Corner brackets (webtoon panel style) -->
+  <g stroke="#00ff41" stroke-width="3" fill="none" class="corner">
+    <path d="M 20 40 L 20 20 L 40 20"/>
+    <path d="M 440 20 L 460 20 L 460 40"/>
+    <path d="M 460 440 L 460 460 L 440 460"/>
+    <path d="M 40 460 L 20 460 L 20 440"/>
+  </g>
+
+  <!-- Main panel (webtoon frame) -->
+  <rect x="60" y="60" width="360" height="360" rx="4" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+  <rect x="60" y="60" width="360" height="360" rx="4" fill="none" stroke="#00ff41" stroke-width="1" opacity="0.3" class="pulse"/>
+
+  <!-- Genji character: stylized ninja face mask -->
+  <g transform="translate(240, 200)" class="float">
+    <!-- Head shape -->
+    <ellipse cx="0" cy="0" rx="80" ry="95" fill="#111"/>
+    <ellipse cx="0" cy="0" rx="80" ry="95" fill="none" stroke="#00ff41" stroke-width="2" opacity="0.5"/>
+
+    <!-- Eyes (anime style) -->
+    <g class="blink">
+      <!-- Left eye -->
+      <ellipse cx="-28" cy="-15" rx="14" ry="10" fill="#00ff41" opacity="0.9"/>
+      <ellipse cx="-28" cy="-15" rx="6" ry="8" fill="#0a0a0a"/>
+      <circle cx="-26" cy="-18" r="2.5" fill="#fff"/>
+      <!-- Right eye -->
+      <ellipse cx="28" cy="-15" rx="14" ry="10" fill="#00ff41" opacity="0.9"/>
+      <ellipse cx="28" cy="-15" rx="6" ry="8" fill="#0a0a0a"/>
+      <circle cx="30" cy="-18" r="2.5" fill="#fff"/>
+    </g>
+
+    <!-- Eyebrows -->
+    <path d="M -45 -35 Q -28 -42 -12 -35" stroke="#00ff41" stroke-width="2.5" fill="none" opacity="0.7"/>
+    <path d="M 12 -35 Q 28 -42 45 -35" stroke="#00ff41" stroke-width="2.5" fill="none" opacity="0.7"/>
+
+    <!-- Mask (ninja style) -->
+    <path d="M -60 10 Q -40 5 -20 10 Q 0 15 20 10 Q 40 5 60 10 L 60 50 Q 40 55 20 50 Q 0 45 -20 50 Q -40 55 -60 50 Z" fill="#1a1a1a" stroke="#00ff41" stroke-width="1.5" opacity="0.8"/>
+
+    <!-- Mouth hint under mask -->
+    <path d="M -15 25 Q 0 30 15 25" stroke="#00ff41" stroke-width="2" fill="none" opacity="0.4"/>
+
+    <!-- Headband (anime style) -->
+    <path d="M -80 -30 Q 0 -50 80 -30" stroke="#00ff41" stroke-width="3" fill="none" opacity="0.6"/>
+    <rect x="-85" y="-42" width="170" height="14" rx="3" fill="#1a1a1a" stroke="#00ff41" stroke-width="1.5" opacity="0.7"/>
+    <!-- Headband knot -->
+    <rect x="60" y="-48" width="16" height="22" rx="3" fill="#1a1a1a" stroke="#00ff41" stroke-width="1.5" opacity="0.7" transform="rotate(15 68 -37)"/>
+  </g>
+
+  <!-- Text: GENJI -->
+  <g transform="translate(240, 340)" class="text-glow">
+    <text x="0" y="0" text-anchor="middle" font-family="'Courier New', monospace" font-size="52" font-weight="bold" fill="url(#grad)" letter-spacing="8">GENJI</text>
+  </g>
+
+  <!-- Subtitle -->
+  <g transform="translate(240, 380)">
+    <text x="0" y="0" text-anchor="middle" font-family="'Courier New', monospace" font-size="14" fill="#666" letter-spacing="4">// open-source manga translator //</text>
+  </g>
+
+  <!-- Webtoon speech bubble -->
+  <g transform="translate(340, 120)" class="pulse">
+    <ellipse cx="0" cy="0" rx="70" ry="35" fill="#1a1a1a" stroke="#00ff41" stroke-width="1.5"/>
+    <path d="M -30 30 L -45 55 L -15 32" fill="#1a1a1a" stroke="#00ff41" stroke-width="1.5"/>
+    <text x="0" y="5" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#00ff41" font-weight="bold">BYOK!</text>
+  </g>
+
+  <!-- Tech decorations -->
+  <g transform="translate(120, 120)" opacity="0.5">
+    <text x="0" y="0" font-family="monospace" font-size="10" fill="#333">v1.0.0</text>
+  </g>
+  <g transform="translate(360, 420)" opacity="0.5">
+    <text x="0" y="0" font-family="monospace" font-size="10" fill="#333">MIT</text>
+  </g>
+
+  <!-- Circuit lines (tech feel) -->
+  <g stroke="#1a1a1a" stroke-width="1" opacity="0.5">
+    <path d="M 0 100 L 60 100"/>
+    <path d="M 420 100 L 480 100"/>
+    <path d="M 0 420 L 60 420"/>
+    <path d="M 420 420 L 480 420"/>
+    <path d="M 240 0 L 240 60"/>
+    <path d="M 240 420 L 240 480"/>
+  </g>
+</svg>
