@@ -265,8 +265,8 @@ browser.storage.onChanged.addListener((changes) => {
 // ─── Message listener (commands from background) ────────────────────────────
 browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     try {
-        if (msg.type == "command_contextmenu" || msg.type == "contextmenu_screenshot") contextMenuImage(contextMenuPos)
-        else if (msg.type == "command_screenshot" || msg.type == "contextmenu_screenshot") contextMenuScreenshot()
+        if (msg.type == "command_contextmenu") contextMenuImage(contextMenuPos)
+        else if (msg.type == "contextmenu_screenshot" || msg.type == "command_screenshot") contextMenuScreenshot()
         else if (msg.type == "command_screencrop" || msg.type == "contextmenu_screencrop") contextMenuScreencrop("shortcut")
         else if (msg.type == "command_repeatscreencrop" || msg.type == "contextmenu_repeatscreencrop") repeatScreencrop()
         else if (msg.type == "command_translate" || msg.type == "contextmenu_translate") contextMenuTranslate()

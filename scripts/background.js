@@ -10,7 +10,11 @@
 // built by dropxtor
 // MIT License
 
-import { TranslationCache } from "./translationCache.js"
+// WebExtension polyfill: makes chrome.* available as browser.*
+importScripts("./browser-polyfill.min.js");
+
+// TranslationCache as classic script (no ES modules in classic SW)
+importScripts("./translationCache.js");
 
 const translationCache = new TranslationCache();
 
@@ -639,6 +643,9 @@ async function renderTranslatedImage(inpaintedBase64, textObjects, settings) {
         const strokeEnabled = settings.genji_stroke_enabled !== false;
         const textAlign = settings.genji_text_alignment || "auto";
 
+        // Load font for OffscreenCanvas (SW has no @font-face CSS)
+        await ensureFontLoaded(font);
+
         for (const textObj of textObjects) {
             if (!textObj.translated || !textObj.bbox || textObj.bbox.length < 4) continue;
 
@@ -706,6 +713,51 @@ function mapFontName(fontKey) {
         figtree: "Figtree"
     };
     return map[fontKey] || "WildWords";
+}
+
+// ─── Font loading for OffscreenCanvas (Service Worker) ──────────────────────
+// Service Workers can't use @font-face from CSS. Use FontFace API instead.
+const fontUrlMap = {
+    "NotoSans": "fonts/NotoSans.ttf",
+    "WildWords": "fonts/WildWords.otf",
+    "Heroika": "fonts/Heroika.otf",
+    "Shonen": "fonts/Shonen.otf",
+    "BadComic": "fonts/BadComic.ttf",
+    "MaShanZheng": "fonts/MaShanZheng.ttf",
+    "KomikaJam": "fonts/KomikaJam.ttf",
+    "Bangers": "fonts/Bangers.ttf",
+    "Edo": "fonts/Edo.ttf",
+    "RIDIBatang": "fonts/RIDIBatang.otf",
+    "Bushidoo": "fonts/Bushidoo.ttf",
+    "Hayah": "fonts/Hayah.otf",
+    "Itim": "fonts/Itim.ttf",
+    "MogulIrina": "fonts/MogulIrina.ttf",
+    "Kalam": "fonts/Kalam.ttf",
+    "HindSiliguri": "fonts/HindSiliguri.ttf",
+    "Figtree": "fonts/Figtree.ttf"
+};
+const loadedFonts = new Set();
+
+async function ensureFontLoaded(fontFamily) {
+    if (loadedFonts.has(fontFamily)) return;
+    const fontPath = fontUrlMap[fontFamily];
+    if (!fontPath) return;
+
+    try {
+        const url = browser.runtime.getURL(fontPath);
+        const response = await fetch(url);
+        const buffer = await response.arrayBuffer();
+        const fontFace = new FontFace(fontFamily, buffer);
+        await fontFace.load();
+        // Register in global font set (accessible by OffscreenCanvas)
+        if (self.fonts) {
+            self.fonts.add(fontFace);
+        }
+        loadedFonts.add(fontFamily);
+    } catch (e) {
+        console.warn("[Genji] Failed to load font:", fontFamily, e);
+        // Fallback: sans-serif
+    }
 }
 
 function getContrastColor(hexColor) {

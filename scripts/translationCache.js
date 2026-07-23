@@ -301,4 +301,4 @@ class TranslationCache {
     }
 }
 
-export { TranslationCache }
+// No export in classic script (importScripts loaded)
