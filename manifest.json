@@ -1,0 +1,77 @@
+{
+  "manifest_version": 3,
+  "name": "Genji Image Translator",
+  "description": "Open-source AI manga & image translator. Bring your own API keys (BYOK) — no auth, no credits, no server. Translate any image on any website using GPT, Gemini, Claude, DeepSeek, xAI, OpenRouter, or a local LLM.",
+  "version": "1.0.0",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "images/16.png",
+      "32": "images/32.png",
+      "48": "images/48.png",
+      "128": "images/128.png"
+    },
+    "default_title": "Genji Image Translator"
+  },
+  "icons": {
+    "16": "images/16.png",
+    "32": "images/32.png",
+    "48": "images/48.png",
+    "128": "images/128.png"
+  },
+  "commands": {
+    "genji_contextmenu": {
+      "suggested_key": { "default": "Alt+Shift+D" },
+      "description": "Open Context Menu"
+    },
+    "genji_screencrop": {
+      "suggested_key": { "default": "Alt+Shift+X" },
+      "description": "Screen Crop Image"
+    },
+    "genji_screenshot": {
+      "suggested_key": { "default": "Alt+Shift+C" },
+      "description": "Screenshot Image"
+    },
+    "genji_translate": {
+      "suggested_key": { "default": "Alt+Shift+Z" },
+      "description": "Translate Image"
+    },
+    "genji_edit": {
+      "description": "Edit Image"
+    },
+    "genji_repeatscreencrop": {
+      "description": "Repeat Last Screen Crop"
+    },
+    "genji_download": {
+      "description": "Download Image"
+    }
+  },
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "optional_permissions": [
+    "downloads"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["scripts/zip.js", "scripts/content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "css/*", "fonts/*", "html/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

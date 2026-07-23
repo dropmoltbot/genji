@@ -1,0 +1,91 @@
+/* Genji Image Translator - Popup CSS (dark geek theme) */
+/* MIT License - reverse-engineered and open-sourced by dropxtor */
+
+@font-face {
+    font-family: "Figtree";
+    src: url("../fonts/Figtree.ttf");
+}
+@font-face { font-family: "KomikaJam"; src: url("../fonts/KomikaJam.ttf"); }
+@font-face { font-family: "Bangers"; src: url("../fonts/Bangers.ttf"); }
+@font-face { font-family: "NotoSans"; src: url("../fonts/NotoSans.ttf"); }
+@font-face { font-family: "WildWords"; src: url("../fonts/WildWords.otf"); }
+@font-face { font-family: "Edo"; src: url("../fonts/Edo.ttf"); }
+@font-face { font-family: "RIDIBatang"; src: url("../fonts/RIDIBatang.otf"); }
+@font-face { font-family: "Bushidoo"; src: url("../fonts/Bushidoo.ttf"); }
+@font-face { font-family: "Hayah"; src: url("../fonts/Hayah.otf"); }
+@font-face { font-family: "Itim"; src: url("../fonts/Itim.ttf"); }
+@font-face { font-family: "MogulIrina"; src: url("../fonts/MogulIrina.ttf"); }
+@font-face { font-family: "BadComic"; src: url("../fonts/BadComic.ttf"); }
+@font-face { font-family: "MaShanZheng"; src: url("../fonts/MaShanZheng.ttf"); }
+@font-face { font-family: "Kalam"; src: url("../fonts/Kalam.ttf"); }
+@font-face { font-family: "HindSiliguri"; src: url("../fonts/HindSiliguri.ttf"); }
+@font-face { font-family: "Heroika"; src: url("../fonts/Heroika.otf"); }
+@font-face { font-family: "Shonen"; src: url("../fonts/Shonen.otf"); }
+
+.komika { font-family: "KomikaJam"; }
+.bangers { font-family: "Bangers"; }
+.edo { font-family: "Edo"; }
+.ridi { font-family: "RIDIBatang"; }
+.bushidoo { font-family: "Bushidoo"; }
+.hayah { font-family: "Hayah"; }
+.kalam { font-family: "Kalam"; }
+.hindsiliguri { font-family: "HindSiliguri"; }
+.heroika { font-family: "Heroika"; }
+.shonen { font-family: "Shonen"; }
+.itim { font-family: "Itim"; }
+.notosans { font-family: "NotoSans"; }
+.wildwords { font-family: "WildWords"; }
+.mogul { font-family: "MogulIrina"; }
+.badcomic { font-family: "BadComic"; }
+.mashanzheng { font-family: "MaShanZheng"; }
+.font-figtree { font-family: Figtree, sans-serif; }
+
+html, body {
+    height: 600px !important;
+    width: 400px !important;
+    min-height: 600px !important;
+    min-width: 400px !important;
+    max-height: 600px !important;
+    max-width: 400px !important;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #30363d; border-radius: 100vh; }
+::-webkit-scrollbar-thumb:hover { background: #484f58; }
+
+/* Loader */
+#loader {
+    background-color: rgba(13, 17, 23, .66);
+}
+.loader {
+    width: 84px; height: 84px;
+    border: 8px solid #00d9ff;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+}
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* BYOK status indicator */
+.byok-status-indicator {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}

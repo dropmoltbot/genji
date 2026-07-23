@@ -1,0 +1,411 @@
+/* Genji Image Translator - Content CSS */
+/* Ported from Torii, rebranded for Genji. MIT License. */
+
+@font-face { font-family: "KomikaJam"; src: url("/fonts/KomikaJam.ttf"); }
+@font-face { font-family: "Bangers"; src: url("/fonts/Bangers.ttf"); }
+@font-face { font-family: "NotoSans"; src: url("/fonts/NotoSans.ttf"); }
+@font-face { font-family: "WildWords"; src: url("/fonts/WildWords.otf"); }
+@font-face { font-family: "Figtree"; src: url("/fonts/Figtree.ttf"); }
+@font-face { font-family: "Edo"; src: url("/fonts/Edo.ttf"); }
+@font-face { font-family: "RIDIBatang"; src: url("/fonts/RIDIBatang.otf"); }
+@font-face { font-family: "Bushidoo"; src: url("/fonts/Bushidoo.ttf"); }
+@font-face { font-family: "Hayah"; src: url("/fonts/Hayah.otf"); }
+@font-face { font-family: "Itim"; src: url("/fonts/Itim.ttf"); }
+@font-face { font-family: "MogulIrina"; src: url("/fonts/MogulIrina.ttf"); }
+@font-face { font-family: "BadComic"; src: url("/fonts/BadComic.ttf"); }
+@font-face { font-family: "MaShanZheng"; src: url("/fonts/MaShanZheng.ttf"); }
+@font-face { font-family: "Kalam"; src: url("/fonts/Kalam.ttf"); }
+@font-face { font-family: "HindSiliguri"; src: url("/fonts/HindSiliguri.ttf"); }
+@font-face { font-family: "Heroika"; src: url("/fonts/Heroika.otf"); }
+@font-face { font-family: "Shonen"; src: url("/fonts/Shonen.otf"); }
+
+.komika { font-family: "KomikaJam"; }
+.bangers { font-family: "Bangers"; }
+.edo { font-family: "Edo"; }
+.ridi { font-family: "RIDIBatang"; }
+.bushidoo { font-family: "Bushidoo"; }
+.notosans { font-family: "NotoSans"; }
+.hayah { font-family: "Hayah"; }
+.kalam { font-family: "Kalam"; }
+.hindsiliguri { font-family: "HindSiliguri"; }
+.heroika { font-family: "Heroika"; }
+.shonen { font-family: "Shonen"; }
+.itim { font-family: "Itim"; }
+.wildwords { font-family: "WildWords"; }
+.mogul { font-family: "MogulIrina"; }
+.badcomic { font-family: "BadComic"; }
+.mashanzheng { font-family: "MaShanZheng"; }
+.font-figtree { font-family: Figtree, sans-serif; }
+
+.genji {
+    box-sizing: content-box;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: row;
+    z-index: 2147483640;
+}
+
+.genji-icon {
+    box-sizing: content-box;
+    cursor: pointer;
+    opacity: 0.5;
+    scale: 0.8;
+}
+
+.genji-hover {
+    opacity: 1 !important;
+    cursor: pointer !important;
+}
+
+.genji-credits {
+    box-sizing: content-box;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    overflow-wrap: normal;
+    text-wrap: nowrap;
+    word-break: keep-all;
+    word-wrap: normal;
+    align-items: center;
+    justify-content: center;
+    background-color: #00d9ff;
+    color: #0d1117;
+    text-shadow: 0 1.5px 1.5px rgba(0, 0, 0, .25);
+    border-radius: 30px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border: 2px solid #1a1a2e;
+    height: 16px;
+    width: min-content;
+    font-size: small;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.genji-notification {
+    box-sizing: content-box;
+    position: relative;
+    font-size: 20px;
+    padding: 4px 30px 4px 16px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    color: rgb(51, 51, 51);
+    border-radius: 6px;
+    background-color: white;
+    border: 1px solid rgb(235, 87, 87);
+    box-shadow: 0 2px 14px rgb(235, 87, 87);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+    z-index: 5;
+}
+
+.genji-notification-close {
+    position: absolute;
+    top: -8px;
+    right: -2px;
+    padding: 4px;
+    color: #c5b9a9bf;
+    cursor: pointer;
+}
+
+.genji-notification-close:hover { scale: 1.2; }
+
+.genji-sub-utility {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+}
+
+.genji-utility {
+    width: auto;
+    height: auto;
+    opacity: 0;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.genji-auto-icon { filter: drop-shadow(0 2px 2px rgba(0,0,0,0.33)); width: 22px; height: 22px; }
+
+.genji-auto {
+    background-color: #00d9ff;
+    color: #0d1117;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    box-sizing: content-box;
+    border: 2px solid #1a1a2e;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 10;
+    scale: 0.95;
+    gap: 4px;
+}
+
+.genji-download-icon { filter: drop-shadow(0 2px 2px rgba(0,0,0,0.33)); }
+
+.genji-download {
+    background-color: #00d9ff;
+    display: none;
+    box-sizing: content-box;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    overflow-wrap: normal;
+    word-break: keep-all;
+    word-wrap: normal;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    border: 2px solid #1a1a2e;
+    cursor: pointer;
+    padding: 5px;
+    height: 20px;
+    width: 20px;
+    z-index: 10;
+    scale: 0.95;
+}
+
+.genji-edit-icon { filter: drop-shadow(0 2px 2px rgba(0,0,0,0.33)); }
+
+.genji-edit {
+    background-color: #00d9ff;
+    display: none;
+    box-sizing: content-box;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    overflow-wrap: normal;
+    word-break: keep-all;
+    word-wrap: normal;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    border: 2px solid #1a1a2e;
+    cursor: pointer;
+    padding: 5px;
+    height: 20px;
+    width: 20px;
+    z-index: 10;
+    scale: 0.95;
+}
+
+.genji-screen-image {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 2147483646;
+    cursor: crosshair;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.genji-screen-instructions {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    pointer-events: none;
+    z-index: 2147483647;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font: bold 30px Arial, Helvetica, sans-serif;
+    color: white;
+    box-sizing: border-box;
+}
+
+.genji-screen-instructions-hint {
+    text-align: center;
+    font: bold 30px Arial, Helvetica, sans-serif;
+    color: #00d9ff;
+    font-size: medium;
+}
+
+.genji-crop-rect {
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 2147483646;
+    box-shadow: 0 0 0 max(100vw, 100vh) rgba(0, 0, 0, 0.7);
+    user-select: none;
+    touch-action: none;
+    box-sizing: border-box;
+}
+
+.genji-resize-element {
+    border-top-width: 16px;
+    border-top-color: transparent;
+    border-top-style: solid;
+    border-right-width: 16px;
+    border-right-color: #00d9ff;
+    border-right-style: solid;
+    position: absolute;
+    right: -2px; bottom: -2px;
+    cursor: nwse-resize;
+}
+
+.genji-crop-translate {
+    width: 25px; height: 25px;
+    position: absolute;
+    right: -27px; top: -2px;
+    background-color: #00d9ff;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2147483647;
+}
+
+.genji-crop-translate-icon { width: 20px; height: 20px; }
+
+.genji-crop-cancel {
+    width: 25px; height: 25px;
+    position: absolute;
+    right: -27px; top: 23px;
+    background-color: #d36060;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2147483647;
+}
+
+.genji-crop-cancel-icon { width: 20px; height: 20px; }
+
+.genji-cropped-image-wrapper {
+    position: absolute;
+    z-index: 2147483645;
+    cursor: grab;
+    outline: 2px solid #00d9ff;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.genji-menu {
+    position: fixed;
+    top: 0; left: 0;
+    width: 270px; height: auto;
+    display: flex;
+    flex-direction: column;
+    z-index: 2147483647;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font: bold 16px Arial, Helvetica, sans-serif;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.genji-menu-header {
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: row;
+    gap: 10px;
+    background-color: #00d9ff;
+    color: #0d1117;
+    position: relative;
+    cursor: pointer;
+}
+
+.genji-menu-header-close {
+    position: absolute;
+    top: 0; right: 20px;
+    width: 5px; height: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.genji-menu-header-close:hover { color: gray; }
+
+.genji-menu-icon { width: 25px; height: 25px; }
+
+.genji-menu-header-text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.genji-menu-item {
+    cursor: pointer;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    color: white;
+    align-items: center;
+    width: 100%;
+    background-color: #0d1117;
+}
+
+.genji-menu-item:hover { background-color: #30363d; }
+
+.genji-menu-divider {
+    width: 100%; height: 1px;
+    background-color: #00d9ff;
+}
+
+.genji-loading {
+    animation: genji-spinning-anim 1s ease-in-out infinite;
+}
+
+.genji-pulsing {
+    animation: genji-pulsing-anim 1s ease-in-out infinite;
+}
+
+.genji-rotating {
+    animation: genji-spinning-anim 1s linear infinite;
+}
+
+.genji-scaling {
+    transform: scale(1.1);
+}
+
+@keyframes genji-spinning-anim {
+    to { transform: rotate(-360deg); }
+}
+
+@keyframes genji-pulsing-anim {
+    0% { transform: scale(0.95); }
+    50% { transform: scale(1); }
+    100% { transform: scale(0.95); }
+}
+
+#settings {
+    color-scheme: light;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    width: 28rem;
+    height: auto;
+    max-width: 3.5rem;
+    max-height: 3.5rem;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#settings.open {
+    max-width: 32rem;
+    max-height: 42rem;
+}
+
+@media (max-width: 640px) {
+    #settings { width: 24rem; }
+    #settings.open { max-width: 30rem; }
+}

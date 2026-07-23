@@ -1,0 +1,352 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body class="font-figtree text-base">
+    <div id="loader" class="w-full h-full absolute flex items-center justify-center">
+        <span class="loader"></span>
+    </div>
+
+    <!-- Header -->
+    <div id="header" class="flex flex-row justify-between items-start w-full py-4 px-5" style="border-bottom: 1px solid #30363d;">
+        <div class="flex gap-2 w-fit items-center">
+            <img src="../images/genji.png" class="w-[38px] h-[38px]">
+            <span class="font-bold text-xl" style="color: #00d9ff; text-shadow: 0 0 10px rgba(0,217,255,0.3);">
+                Genji Image<br>Translator
+            </span>
+        </div>
+        <span style="color: #8b949e; font-size: 10px; margin-top: 12px; text-align: right;">
+            BYOK · No Auth<br>Open Source · MIT
+        </span>
+    </div>
+
+    <!-- Main Content -->
+    <div id="content" class="flex-col h-[80%] pt-6 px-8 w-full" style="overflow-y: auto;">
+        <div id="home" class="h-full w-full flex flex-col gap-3 items-start">
+
+            <!-- Enable toggle -->
+            <div class="w-full flex flex-row px-4 py-2 rounded-lg justify-between items-center" style="background: #161b22; border: 1px solid #30363d;">
+                <span class="font-medium text-sm" style="color: #e6edf3;">Enable Genji on this page</span>
+                <label class="relative flex items-center cursor-pointer">
+                    <input id="enabled" type="checkbox" checked class="sr-only peer">
+                    <div style="width: 44px; height: 24px; background: #30363d; border-radius: 12px; position: relative; transition: 0.3s;" class="peer-checked:genji-toggle-on">
+                    </div>
+                </label>
+            </div>
+
+            <!-- Model selection -->
+            <div class="flex flex-col w-full gap-1">
+                <label class="text-xs" style="color: #8b949e;">Translation model</label>
+                <div style="background: #161b22; border: 1px solid #30363d; border-radius: 6px;" class="px-3">
+                    <select id="model-select" class="py-1.5 w-full cursor-pointer" style="background: transparent; color: #e6edf3; border: none; outline: none;">
+                    </select>
+                </div>
+            </div>
+
+            <!-- BYOK button -->
+            <button id="byok-btn" class="w-full py-2 rounded-md font-semibold text-sm cursor-pointer" style="background: #161b22; border: 1px solid #00d9ff; color: #00d9ff;">
+                ⚙ Bring Your Own Keys (BYOK)
+            </button>
+
+            <!-- Font + min font size -->
+            <div class="flex flex-row w-full gap-3">
+                <div class="flex flex-col w-full gap-1">
+                    <label class="text-xs" style="color: #8b949e;">Font family</label>
+                    <div style="background: #161b22; border: 1px solid #30363d; border-radius: 6px;" class="px-3">
+                        <select id="font-select" class="py-1.5 w-full cursor-pointer" style="background: transparent; color: #e6edf3; border: none; outline: none;">
+                            <option class="notosans" value="noto">NotoSans (130 languages)</option>
+                            <option class="wildwords" value="wildwords" selected>WildWords (60 languages)</option>
+                            <option class="heroika" value="heroika">Heroika (40 languages)</option>
+                            <option class="shonen" value="shonen">Shonen (60 languages)</option>
+                            <option class="badcomic" value="badcomic">BadComic (60 languages)</option>
+                            <option class="mashanzheng" value="mashanzheng">MaShanZheng (10 languages)</option>
+                            <option class="komika" value="komika">KomikaJam (30 languages)</option>
+                            <option class="bangers" value="bangers">Bangers (50 languages)</option>
+                            <option class="edo" value="edo">Edo (English only)</option>
+                            <option class="ridi" value="ridi">RIDIBatang (50 languages)</option>
+                            <option class="bushidoo" value="bushidoo">Bushidoo (40 languages)</option>
+                            <option class="hayah" value="hayah">Hayah (30 languages)</option>
+                            <option class="itim" value="itim">Itim (50 languages)</option>
+                            <option class="mogul" value="mogul">Mogul Irina (50 languages)</option>
+                            <option class="kalam" value="kalam">Kalam (50 languages)</option>
+                            <option class="hindsiliguri" value="hindsiliguri">HindSiliguri (50 languages)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex flex-col w-24 shrink-0 gap-1">
+                    <label class="text-xs" style="color: #8b949e;">Min font size</label>
+                    <input type="number" id="min-font-size" min="6" max="100" value="6" style="background: #161b22; border: 1px solid #30363d; border-radius: 6px; color: #e6edf3; padding: 6px 8px; outline: none;">
+                </div>
+            </div>
+
+            <!-- Language + alignment -->
+            <div class="flex gap-3 w-full">
+                <div class="flex flex-col w-full gap-1">
+                    <label class="text-xs" style="color: #8b949e;">Target language</label>
+                    <div style="background: #161b22; border: 1px solid #30363d; border-radius: 6px;" class="px-3">
+                        <select id="language-select" class="py-1.5 w-full cursor-pointer" style="background: transparent; color: #e6edf3; border: none; outline: none;">
+                        </select>
+                    </div>
+                </div>
+                <div class="flex flex-col w-32 shrink-0 gap-1">
+                    <label class="text-xs" style="color: #8b949e;">Text alignment</label>
+                    <div style="background: #161b22; border: 1px solid #30363d; border-radius: 6px;" class="px-3">
+                        <select id="text-alignment-select" class="py-1.5 w-full cursor-pointer" style="background: transparent; color: #e6edf3; border: none; outline: none;">
+                            <option value="auto" selected>Auto</option>
+                            <option value="left">Left</option>
+                            <option value="center">Center</option>
+                            <option value="right">Right</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- More options -->
+            <div class="flex flex-col gap-1 w-full">
+                <label class="text-xs" style="color: #8b949e;">More options</label>
+                <div class="flex flex-row items-center gap-2">
+                    <button id="text-stroke" title="Text stroke (outline)" class="px-3 py-1.5 rounded-md cursor-pointer text-sm font-medium" style="background: #161b22; border: 1px solid #30363d; color: #e6edf3;">
+                        Stroke
+                    </button>
+                    <button id="bubbles-only" title="Only translate text inside speech bubbles" class="px-3 py-1.5 rounded-md cursor-pointer text-sm font-medium" style="background: #161b22; border: 1px solid #30363d; color: #e6edf3;">
+                        Bubbles only
+                    </button>
+                    <button id="legacy-inpaint" title="Use legacy CPU inpainting" class="px-3 py-1.5 rounded-md cursor-pointer text-sm font-medium" style="background: #161b22; border: 1px solid #30363d; color: #e6edf3;">
+                        Legacy inpaint
+                    </button>
+                    <button id="context-sharing" title="Share translation context between images" class="px-3 py-1.5 rounded-md cursor-pointer text-sm font-medium" style="background: #161b22; border: 1px solid #30363d; color: #e6edf3;">
+                        Context
+                    </button>
+                </div>
+            </div>
+
+            <!-- Custom prompt -->
+            <button id="custom-prompt-btn" class="px-4 py-2 rounded-md cursor-pointer text-sm font-semibold" style="background: #161b22; border: 1px solid #30363d; color: #00d9ff;">
+                ✏ Custom Prompt
+            </button>
+        </div>
+
+        <!-- History view -->
+        <div id="recent" class="h-full w-full hidden flex flex-col">
+            <div id="recent-grid-view" class="w-full flex-1 flex flex-col">
+                <div style="max-height: 380px; overflow-y: auto;">
+                    <div id="recent-grid" class="grid grid-cols-3 gap-2 content-start"></div>
+                </div>
+                <div id="pagination-controls" class="hidden justify-center items-center gap-4 py-2">
+                    <button id="prev-page-btn" disabled class="px-3 py-1 rounded" style="background: #161b22; color: #8b949e; border: 1px solid #30363d;">Previous</button>
+                    <span id="page-indicator" class="text-xs" style="color: #8b949e;">Page 1</span>
+                    <button id="next-page-btn" disabled class="px-3 py-1 rounded" style="background: #161b22; color: #8b949e; border: 1px solid #30363d;">Next</button>
+                </div>
+                <div id="recent-empty" class="hidden flex-col items-center justify-center flex-1 gap-2">
+                    <p class="text-sm" style="color: #8b949e;">No recent translations</p>
+                </div>
+            </div>
+            <div id="recent-detail-view" class="hidden flex-col gap-2 w-full h-full">
+                <button id="recent-back" class="px-3 py-1.5 rounded-md" style="background: #161b22; color: #00d9ff; border: 1px solid #30363d; cursor: pointer;">← Back</button>
+                <div class="flex-1" style="background: #161b22; border: 1px solid #30363d; border-radius: 8px; overflow: hidden;">
+                    <img id="recent-image" class="w-full max-h-full object-contain">
+                </div>
+                <div class="flex flex-row gap-2 justify-center">
+                    <button id="recent-flip" class="px-3 py-1.5 rounded-md text-sm" style="background: #00d9ff; color: #0d1117; cursor: pointer;">Flip</button>
+                    <button id="recent-download" class="px-3 py-1.5 rounded-md text-sm" style="background: #161b22; color: #e6edf3; border: 1px solid #30363d; cursor: pointer;">Download</button>
+                    <button id="recent-delete" class="px-3 py-1.5 rounded-md text-sm" style="background: #161b22; color: #f85149; border: 1px solid #30363d; cursor: pointer;">Delete</button>
+                </div>
+            </div>
+            <div id="auto-save-container">
+                <div class="flex items-center justify-between px-1 py-2">
+                    <div class="flex flex-col">
+                        <span class="text-sm font-medium" style="color: #e6edf3;">Auto-save</span>
+                        <span class="text-xs" style="color: #8b949e;">Save to Downloads/</span>
+                        <input type="text" id="auto-save-folder" value="GenjiTranslations" style="background: #161b22; border: 1px solid #30363d; color: #e6edf3; border-radius: 4px; padding: 2px 4px; width: 120px; outline: none;">
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="auto-save-toggle" class="sr-only peer">
+                        <div style="width: 36px; height: 20px; background: #30363d; border-radius: 18px; position: relative; transition: 0.3s;"></div>
+                    </label>
+                </div>
+                <!-- Auto-delete retention -->
+                <div class="flex items-center justify-between px-1 py-2">
+                    <div class="flex flex-col">
+                        <span class="text-sm font-medium" style="color: #e6edf3;">Auto-delete</span>
+                        <span class="text-xs" style="color: #8b949e;">Delete history older than</span>
+                    </div>
+                    <select id="retention-select" style="background: #161b22; border: 1px solid #30363d; color: #e6edf3; border-radius: 4px; padding: 4px 8px; outline: none;">
+                        <option value="86400000">1 day</option>
+                        <option value="604800000" selected>1 week</option>
+                        <option value="2592000000">1 month</option>
+                        <option value="-1">Never</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings view -->
+        <div id="settings" class="h-full w-full hidden flex-col gap-4">
+            <div class="flex-1 overflow-y-auto flex flex-col gap-5">
+                <!-- Preferences -->
+                <div class="flex flex-col gap-2">
+                    <span class="text-xs font-bold uppercase tracking-wide" style="color: #8b949e;">Preferences</span>
+                    <div style="background: #161b22; border: 1px solid #30363d; border-radius: 8px; overflow: hidden;">
+                        <div class="flex flex-row px-4 py-3 justify-between items-center">
+                            <span class="text-sm" style="color: #e6edf3;">Enable Genji on every page</span>
+                            <label class="relative flex items-center cursor-pointer">
+                                <input id="default-enabled" type="checkbox" checked class="sr-only peer">
+                                <div style="width: 44px; height: 24px; background: #30363d; border-radius: 12px;"></div>
+                            </label>
+                        </div>
+                        <div class="flex flex-row px-4 py-3 justify-between items-center" style="border-top: 1px solid #30363d;">
+                            <span class="text-sm" style="color: #e6edf3;">Auto-load previous translations</span>
+                            <label class="relative flex items-center cursor-pointer">
+                                <input id="autocache" type="checkbox" class="sr-only peer">
+                                <div style="width: 44px; height: 24px; background: #30363d; border-radius: 12px;"></div>
+                            </label>
+                        </div>
+                        <div class="flex flex-col px-4 py-3" style="border-top: 1px solid #30363d;">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm" style="color: #e6edf3;">Min image detection size</span>
+                                <span id="min-image-size-value" class="text-xs" style="color: #00d9ff; background: #161b22; padding: 2px 8px; border-radius: 10px;">200px</span>
+                            </div>
+                            <input id="min-image-size" type="range" min="100" max="800" value="200" step="100" class="w-full" style="accent-color: #00d9ff;">
+                        </div>
+                    </div>
+                </div>
+                <!-- Appearance -->
+                <div class="flex flex-col gap-2">
+                    <span class="text-xs font-bold uppercase tracking-wide" style="color: #8b949e;">Appearance</span>
+                    <div style="background: #161b22; border: 1px solid #30363d; border-radius: 8px;">
+                        <div class="flex flex-row px-4 py-3 justify-between items-center">
+                            <span class="text-sm" style="color: #e6edf3;">Genji icon hover location</span>
+                            <div class="flex flex-row gap-2">
+                                <div id="genji-tl" class="w-8 h-8 flex items-center justify-center rounded cursor-pointer" style="background: #00d9ff;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#0d1117"><path d="M5 5h6v2H7v4H5V5z" /></svg>
+                                </div>
+                                <div id="genji-tr" class="w-8 h-8 flex items-center justify-center rounded cursor-pointer" style="background: #30363d;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#e6edf3"><path d="M19 5h-6v2h4v4h2V5z" /></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- About -->
+                <div class="flex flex-col gap-2">
+                    <span class="text-xs font-bold uppercase tracking-wide" style="color: #8b949e;">About</span>
+                    <div style="background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px;">
+                        <p class="text-sm" style="color: #8b949e; line-height: 1.6;">
+                            Genji is an open-source AI manga & image translator.<br>
+                            No accounts, no credits, no servers — just your own API keys.<br>
+                            <br>
+                            <a href="https://github.com/dropxtor/genji" target="_blank" style="color: #00d9ff;">GitHub ↗</a> · MIT License · v1.0.0
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (tab navigation) -->
+    <div id="footer" class="w-full flex flex-row justify-around font-bold text-lg" style="position: absolute; bottom: 0; left: 0; height: 60px; background: #161b22; border-top: 1px solid #30363d;">
+        <button id="home-button" class="flex flex-col items-center justify-center cursor-pointer" style="border: none; background: transparent;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="#00d9ff"><path d="M13 19H19V9.97815L12 4.53371L5 9.97815V19H11V13H13V19ZM21 20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V9.48907C3 9.18048 3.14247 8.88917 3.38606 8.69972L11.3861 2.47749C11.7472 2.19663 12.2528 2.19663 12.6139 2.47749L20.6139 8.69972C20.8575 8.88917 21 9.18048 21 9.48907V20Z" /></svg>
+            <span class="text-xs" style="color: #00d9ff;">Home</span>
+        </button>
+        <button id="recent-button" class="flex flex-col items-center justify-center cursor-pointer" style="border: none; background: transparent;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="#8b949e"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM13 12H17V14H11V7H13V12Z" /></svg>
+            <span class="text-xs" style="color: #8b949e;">History</span>
+        </button>
+        <button id="settings-button" class="flex flex-col items-center justify-center cursor-pointer" style="border: none; background: transparent;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="#8b949e"><path d="M12 1L21.5 6.5V17.5L12 23L2.5 17.5V6.5L12 1ZM12 3.311L4.5 7.65311V16.3469L12 20.689L19.5 16.3469V7.65311L12 3.311ZM12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12C16 14.2091 14.2091 16 12 16ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z" /></svg>
+            <span class="text-xs" style="color: #8b949e;">Settings</span>
+        </button>
+    </div>
+
+    <!-- Custom Prompt Page -->
+    <div id="custom-prompt-page" class="hidden flex-col gap-2 h-[90%] px-8 pt-8">
+        <button id="close-custom-prompt" class="ml-auto text-sm py-1 px-2 rounded-md cursor-pointer" style="background: #161b22; color: #00d9ff; border: 1px solid #30363d;">Back</button>
+        <h2 class="text-lg font-medium" style="color: #e6edf3;">Custom translation prompt</h2>
+        <span id="custom-prompt-counter" class="text-xs" style="color: #8b949e;">0/1000</span>
+        <textarea id="custom-prompt-input" maxlength="1000" placeholder="Add your own instructions or context to the default translation prompt." class="flex-1 w-full p-3 rounded-md resize-none" style="background: #161b22; color: #e6edf3; border: 1px solid #30363d; outline: none;"></textarea>
+    </div>
+
+    <!-- BYOK Page -->
+    <div id="byok-page" class="hidden flex-col gap-3 h-[90%] px-8 pt-8 pb-4" style="overflow-y: auto;">
+        <button id="close-byok" class="ml-auto text-sm py-1 px-2 rounded-md cursor-pointer" style="background: #161b22; color: #00d9ff; border: 1px solid #30363d;">Back</button>
+        <h2 class="text-lg font-medium" style="color: #e6edf3;">Bring Your Own Keys</h2>
+        <p class="text-xs" style="color: #8b949e; line-height: 1.5;">
+            Enter your own API keys to translate images directly. No server, no auth, no credits —
+            just you and the AI provider. Keys are stored locally in your browser, never sent anywhere else.
+        </p>
+
+        <div class="flex flex-col gap-3">
+            <!-- OpenRouter -->
+            <div class="flex flex-col gap-1">
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-semibold" style="color: #e6edf3;">OpenRouter (All Providers)</label>
+                    <a href="https://openrouter.ai/keys" target="_blank" style="color: #00d9ff; font-size: 10px;">Get Key ↗</a>
+                </div>
+                <input type="text" id="byok-openrouter-input" placeholder="sk-or-v1-..." class="w-full text-xs py-1.5 px-3 rounded-md" style="background: #161b22; color: #e6edf3; border: 1px solid #30363d; outline: none;">
+            </div>
+            <!-- Google Gemini -->
+            <div class="flex flex-col gap-1">
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-semibold" style="color: #e6edf3;">Google (Gemini)</label>
+                    <a href="https://aistudio.google.com/api-keys" target="_blank" style="color: #00d9ff; font-size: 10px;">Get Key ↗</a>
+                </div>
+                <input type="text" id="byok-google-input" placeholder="AIzaSy..." class="w-full text-xs py-1.5 px-3 rounded-md" style="background: #161b22; color: #e6edf3; border: 1px solid #30363d; outline: none;">
+            </div>
+            <!-- OpenAI -->
+            <div class="flex flex-col gap-1">
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-semibold" style="color: #e6edf3;">OpenAI (GPT)</label>
+                    <a href="https://platform.openai.com/api-keys" target="_blank" style="color: #00d9ff; font-size: 10px;">Get Key ↗</a>
+                </div>
+                <input type="text" id="byok-openai-input" placeholder="sk-proj-..." class="w-full text-xs py-1.5 px-3 rounded-md" style="background: #161b22; color: #e6edf3; border: 1px solid #30363d; outline: none;">
+            </div>
+            <!-- Anthropic -->
+            <div class="flex flex-col gap-1">
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-semibold" style="color: #e6edf3;">Anthropic (Claude)</label>
+                    <a href="https://platform.anthropic.com/" target="_blank" style="color: #00d9ff; font-size: 10px;">Get Key ↗</a>
+                </div>
+                <input type="text" id="byok-anthropic-input" placeholder="sk-ant-..." class="w-full text-xs py-1.5 px-3 rounded-md" style="background: #161b22; color: #e6edf3; border: 1px solid #30363d; outline: none;">
+            </div>
+            <!-- DeepSeek -->
+            <div class="flex flex-col gap-1">
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-semibold" style="color: #e6edf3;">DeepSeek</label>
+                    <a href="https://platform.deepseek.com/api_keys" target="_blank" style="color: #00d9ff; font-size: 10px;">Get Key ↗</a>
+                </div>
+                <input type="text" id="byok-deepseek-input" placeholder="sk-..." class="w-full text-xs py-1.5 px-3 rounded-md" style="background: #161b22; color: #e6edf3; border: 1px solid #30363d; outline: none;">
+            </div>
+            <!-- xAI -->
+            <div class="flex flex-col gap-1">
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-semibold" style="color: #e6edf3;">xAI (Grok)</label>
+                    <a href="https://console.x.ai/" target="_blank" style="color: #00d9ff; font-size: 10px;">Get Key ↗</a>
+                </div>
+                <input type="text" id="byok-xai-input" placeholder="xai-..." class="w-full text-xs py-1.5 px-3 rounded-md" style="background: #161b22; color: #e6edf3; border: 1px solid #30363d; outline: none;">
+            </div>
+            <!-- Self-hosted / local LLM -->
+            <div class="flex flex-col gap-2" style="border-top: 1px solid #30363d; padding-top: 12px;">
+                <span class="text-xs font-semibold" style="color: #e6edf3;">LM Studio / Self-hosted / Any OpenAI-compatible API</span>
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs" style="color: #8b949e;">Base URL (OpenAI-compatible)</label>
+                    <input type="text" id="byok-local-url-input" placeholder="http://203.0.113.50:1234/v1" class="w-full text-xs py-1 px-2 rounded-md" style="background: #161b22; color: #e6edf3; border: 1px solid #30363d; outline: none;">
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs" style="color: #8b949e;">Model Name</label>
+                    <input type="text" id="byok-local-model-input" placeholder="qwen2.5-7b" class="w-full text-xs py-1 px-2 rounded-md" style="background: #161b22; color: #e6edf3; border: 1px solid #30363d; outline: none;">
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs" style="color: #8b949e;">API Key (Optional)</label>
+                    <input type="text" id="byok-local-input" placeholder="Optional" class="w-full text-xs py-1.5 px-3 rounded-md" style="background: #161b22; color: #e6edf3; border: 1px solid #30363d; outline: none;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="popup.js"></script>
+</body>
+</html>

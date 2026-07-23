@@ -1,0 +1,24 @@
+/* Genji Image Translator - Main CSS (dark geek theme) */
+/* reverse-engineered and open-sourced by dropxtor - MIT License */
+
+:root {
+    --genji-bg: #0d1117;
+    --genji-surface: #161b22;
+    --genji-border: #30363d;
+    --genji-text: #e6edf3;
+    --genji-text-dim: #8b949e;
+    --genji-accent: #00d9ff;
+    --genji-accent-dim: #0ea5e9;
+    --genji-success: #3fb950;
+    --genji-danger: #f85149;
+    --genji-warning: #d29922;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}

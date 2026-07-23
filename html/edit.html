@@ -1,0 +1,135 @@
+<!-- Genji Image Translator - Edit Page -->
+<!-- Ported from Torii edit.html, rebranded. MIT License. -->
+<div class="fixed top-0 left-0 w-screen h-dvh z-[2147483647]" style="background: #dce4e4;">
+  <!-- Toggle Settings Button -->
+  <button id="toggle-settings" class="absolute top-2 left-2 cursor-pointer z-40" style="pointer-events: auto;">
+    <svg class="w-10 h-10 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#262626">
+      <path d="M12 1L21.5 6.5V17.5L12 23L2.5 17.5V6.5L12 1ZM12 3.311L4.5 7.65311V16.3469L12 20.689L19.5 16.3469V7.65311L12 3.311ZM12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12C16 14.2091 14.2091 16 12 16ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z" />
+    </svg>
+  </button>
+
+  <!-- Settings Panel -->
+  <div id="settings" class="flex flex-col gap-4 absolute top-6 left-14 z-40 rounded-2xl bg-neutral-50 border border-neutral-800 shadow-md overflow-hidden transition-all duration-300" style="pointer-events: auto; max-width: 3.5rem; max-height: 3.5rem;">
+    <div id="edit-settings" class="flex flex-col pt-14">
+      <!-- Mode selector -->
+      <div class="flex flex-col px-4 sm:px-8 pb-3 border-b border-neutral-400">
+        <label class="text-xs sm:text-sm text-neutral-700">Mode</label>
+        <div class="flex flex-row gap-2">
+          <button id="erase-mode" class="flex flex-row gap-2 text-lg py-1 px-3 shadow-md text-neutral-800 border border-neutral-800 rounded-md cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#262626"><path d="M13.9999 18.9966H20.9999V20.9966H11.9999L8.00229 20.9991L1.51457 14.5113C1.12405 14.1208 1.12405 13.4877 1.51457 13.0971L12.1212 2.49053C12.5117 2.1 13.1449 2.1 13.5354 2.49053L21.3136 10.2687C21.7041 10.6592 21.7041 11.2924 21.3136 11.6829L13.9999 18.9966ZM15.6567 14.5113L19.1922 10.9758L12.8283 4.61185L9.29275 8.14738L15.6567 14.5113Z" /></svg>
+          </button>
+          <button id="paint-mode" class="flex flex-row gap-2 text-lg py-1 px-3 shadow-md text-neutral-800 border border-neutral-800 rounded-md cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#262626"><path d="M5 4.9967V7.9967H19V4.9967H5ZM4 2.9967H20C20.5523 2.9967 21 3.44442 21 3.9967V8.9967C21 9.54899 20.5523 9.9967 20 9.9967H4C3.44772 9.9967 3 9.54899 3 8.9967V3.9967C3 3.44442 3.44772 2.9967 4 2.9967ZM6 11.9967H12C12.5523 11.9967 13 12.4444 13 12.9967V15.9967H14V21.9967H10V15.9967H11V13.9967H5C4.44772 13.9967 4 13.549 4 12.9967V10.9967H6V11.9967Z" /></svg>
+          </button>
+          <button id="inpaint-mode" class="flex flex-row gap-2 text-lg py-1 px-3 shadow-md text-neutral-800 border border-neutral-800 rounded-md cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#262626"><path d="M4.7134 7.12811L4.46682 7.69379C4.28637 8.10792 3.71357 8.10792 3.53312 7.69379L3.28656 7.12811C2.84706 6.11947 2.05545 5.31641 1.06767 4.87708L0.308047 4.53922C-0.102682 4.35653 -0.102682 3.75881 0.308047 3.57612L1.0252 3.25714C2.03838 2.80651 2.84417 1.97373 3.27612 0.930828L3.52932 0.319534C3.70578 -0.106511 4.29417 -0.106511 4.47063 0.319534L4.72382 0.930828C5.15577 1.97373 5.96158 2.80651 6.9748 3.25714L7.69188 3.57612C8.10271 3.75881 8.10271 4.35653 7.69188 4.53922L6.93228 4.87708C5.94451 5.31641 5.15288 6.11947 4.7134 7.12811Z" /></svg>
+          </button>
+          <button id="ocr-mode" class="flex flex-row gap-2 text-lg py-1 px-3 shadow-md text-neutral-800 border border-neutral-800 rounded-md cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#262626"><path d="M4.99805 15V19H8.99805V21H2.99805V15H4.99805ZM20.998 15V21H14.998V19H18.998V15H20.998ZM12.997 6L17.397 17H15.242L14.041 14H9.95105L8.75205 17H6.59805L10.997 6H12.997Z" /></svg>
+          </button>
+          <button id="add-mode" class="flex flex-row gap-2 text-lg py-1 px-3 shadow-md text-neutral-800 border border-neutral-800 rounded-md cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#262626"><path d="M10 6V21H8V6H2V4H16V6H10ZM18 14V21H16V14H13V12H21V14H18Z" /></svg>
+          </button>
+          <button id="warp-mode" class="flex flex-row items-center justify-center gap-2 text-lg py-1 px-3 shadow-md text-neutral-800 border border-neutral-800 rounded-md cursor-pointer" title="Warp text">
+            <img class="w-6 h-6 object-contain" src="../images/warp-arc.png" alt="Warp text">
+          </button>
+        </div>
+        <h2 id="mode-title" class="text-base sm:text-lg font-medium text-neutral-800 mt-3">Edit, move, remove or add text</h2>
+      </div>
+
+      <!-- Erase settings -->
+      <div id="erase-settings" class="flex flex-col gap-3 bg-zinc-100 px-4 sm:px-8 pt-3 pb-8">
+        <div class="flex flex-col w-full gap-1">
+          <label class="text-xs sm:text-sm text-neutral-700 flex flex-row gap-2">Brush size <span id="erase-brush-size-value" class="text-neutral-800">90px</span> (Alt+Scroll)</label>
+          <input type="range" min="5" max="300" value="90" id="erase-brush-size" class="cursor-pointer">
+        </div>
+      </div>
+
+      <!-- Paint settings -->
+      <div id="paint-settings" class="flex flex-col gap-3 bg-zinc-100 px-4 sm:px-8 pt-3 pb-8 hidden">
+        <div class="flex flex-col w-full gap-1">
+          <label class="text-xs sm:text-sm text-neutral-700">Brush size</label>
+          <input type="range" min="1" max="200" value="20" id="paint-brush-size" class="cursor-pointer">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-xs sm:text-sm text-neutral-700">Color</label>
+          <input type="color" value="#ffffff" id="paint-color" class="cursor-pointer w-full h-10 rounded">
+        </div>
+      </div>
+
+      <!-- Inpaint settings -->
+      <div id="inpaint-settings" class="flex flex-col gap-3 bg-zinc-100 px-4 sm:px-8 pt-3 pb-8 hidden">
+        <button id="run-inpaint" class="py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-md cursor-pointer font-medium">Run AI Inpaint</button>
+      </div>
+
+      <!-- OCR settings -->
+      <div id="ocr-settings" class="flex flex-col gap-3 bg-zinc-100 px-4 sm:px-8 pt-3 pb-8 hidden">
+        <button id="run-ocr" class="py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-md cursor-pointer font-medium">Detect & Extract Text</button>
+      </div>
+
+      <!-- Add text settings -->
+      <div id="add-settings" class="flex flex-col gap-3 bg-zinc-100 px-4 sm:px-8 pt-3 pb-8 hidden">
+        <div class="flex flex-col gap-1">
+          <label class="text-xs sm:text-sm text-neutral-700">Text content</label>
+          <textarea id="add-text-input" rows="3" class="border border-neutral-600 rounded-md p-2 resize-none" placeholder="Enter text..."></textarea>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-xs sm:text-sm text-neutral-700">Font size</label>
+          <input type="range" min="8" max="200" value="24" id="add-font-size" class="cursor-pointer">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-xs sm:text-sm text-neutral-700">Color</label>
+          <input type="color" value="#000000" id="add-text-color" class="cursor-pointer w-full h-10 rounded">
+        </div>
+      </div>
+
+      <!-- Warp settings -->
+      <div id="warp-settings" class="flex flex-col gap-3 bg-zinc-100 px-4 sm:px-8 pt-3 pb-8 hidden">
+        <div class="flex flex-row gap-2 flex-wrap">
+          <button class="warp-preset-btn p-1 border border-neutral-600 rounded cursor-pointer" data-warp="arc" id="warp-preset-arch"><img class="w-8 h-8" src="../images/warp-arch.png"></button>
+          <button class="warp-preset-btn p-1 border border-neutral-600 rounded cursor-pointer" data-warp="bulge"><img class="w-8 h-8" src="../images/warp-bulge.png"></button>
+          <button class="warp-preset-btn p-1 border border-neutral-600 rounded cursor-pointer" data-warp="wave"><img class="w-8 h-8" src="../images/warp-wave.png"></button>
+          <button class="warp-preset-btn p-1 border border-neutral-600 rounded cursor-pointer" data-warp="squeeze"><img class="w-8 h-8" src="../images/warp-squeeze.png"></button>
+          <button class="warp-preset-btn p-1 border border-neutral-600 rounded cursor-pointer" data-warp="perspective"><img class="w-8 h-8" src="../images/warp-perspective.png"></button>
+          <button class="warp-preset-btn p-1 border border-neutral-600 rounded cursor-pointer" data-warp="twist"><img class="w-8 h-8" src="../images/warp-twist.png"></button>
+          <button class="warp-preset-btn p-1 border border-neutral-600 rounded cursor-pointer" data-warp="fisheye"><img class="w-8 h-8" src="../images/warp-fisheye.png"></button>
+          <button class="warp-preset-btn p-1 border border-neutral-600 rounded cursor-pointer" data-warp="fish"><img class="w-8 h-8" src="../images/warp-fish.png"></button>
+        </div>
+        <div class="flex flex-col gap-1" id="warp-bend-group">
+          <label class="text-xs sm:text-sm text-neutral-700">Bend: <span id="warp-bend-value">50</span></label>
+          <input type="range" min="-100" max="100" value="50" id="warp-bend" class="cursor-pointer">
+        </div>
+        <div class="flex flex-col gap-1" id="warp-hdist-group">
+          <label class="text-xs sm:text-sm text-neutral-700">Horizontal Distortion: <span id="warp-hdist-value">0</span></label>
+          <input type="range" min="-100" max="100" value="0" id="warp-hdist" class="cursor-pointer">
+        </div>
+        <div class="flex flex-col gap-1" id="warp-vdist-group">
+          <label class="text-xs sm:text-sm text-neutral-700">Vertical Distortion: <span id="warp-vdist-value">0</span></label>
+          <input type="range" min="-100" max="100" value="0" id="warp-vdist" class="cursor-pointer">
+        </div>
+        <div class="flex flex-col gap-1" id="warp-freq-group">
+          <label class="text-xs sm:text-sm text-neutral-700">Frequency: <span id="warp-freq-value">3</span></label>
+          <input type="range" min="1" max="10" value="3" id="warp-freq" class="cursor-pointer">
+        </div>
+        <div class="flex flex-row gap-2" id="warp-dir-group">
+          <button id="warp-dir-h" class="px-3 py-1 border border-neutral-600 rounded cursor-pointer bg-blue-200">Horizontal</button>
+          <button id="warp-dir-v" class="px-3 py-1 border border-neutral-600 rounded cursor-pointer">Vertical</button>
+        </div>
+      </div>
+
+      <!-- Common controls -->
+      <div class="flex flex-col gap-3 px-4 sm:px-8 pt-3 pb-6 border-t border-neutral-400">
+        <button id="remove-text-btn" class="py-2 px-4 bg-red-500 hover:bg-red-600 text-white rounded-md cursor-pointer font-medium hidden">Remove All Text</button>
+        <button id="copy-text-btn" class="py-2 px-4 bg-neutral-700 text-white rounded-md cursor-pointer font-medium hidden">Copy All Text</button>
+        <button id="reset-btn" class="py-2 px-4 bg-neutral-700 hover:bg-neutral-800 text-white rounded-md cursor-pointer font-medium">Reset</button>
+        <button id="save-btn" class="py-2 px-4 bg-green-500 hover:bg-green-600 text-white rounded-md cursor-pointer font-medium">Save & Apply</button>
+        <button id="exit-btn" class="py-2 px-4 bg-neutral-700 hover:bg-neutral-800 text-white rounded-md cursor-pointer font-medium">Exit Edit Mode</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Working canvas container -->
+  <div id="canvas-container" class="w-full h-full flex items-center justify-center overflow-auto">
+    <canvas id="working-canvas" class="max-w-full max-h-full"></canvas>
+  </div>
+</div>
