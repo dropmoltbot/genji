@@ -27,7 +27,7 @@
 
 ## What is Genji?
 
-Genji is a **free, open-source browser extension** that translates any image on any website using AI. Built as a **reverse-engineered alternative** to commercial manga translators (like Torii Image Translator), Genji removes all authentication, credits, subscriptions, and server middlemen.
+Genji is a **free, open-source browser extension** that translates any image on any website using AI. Built as an open-source alternative to commercial manga translators, Genji removes all authentication, credits, subscriptions, and server middlemen.
 
 **You bring your own API key. You translate unlimited images. For free. Forever.**
 
@@ -273,8 +273,8 @@ cd genji
 
 ## Credits
 
-- **Reverse-engineered and open-sourced by**: [dropxtor](https://github.com/dropxtor) ([@0xDropxtor](https://x.com/0xDropxtor))
-- **Original concept**: Torii Image Translator (commercial product, not affiliated)
+- **Built by**: [dropxtor](https://github.com/dropxtor) ([@0xDropxtor](https://x.com/0xDropxtor))
+- **Original concept**: AI-powered image translation
 - **Fonts**: Various manga/comic fonts (see fonts/ directory)
 - **AI Providers**: Google, OpenAI, Anthropic, OpenRouter, DeepSeek, xAI
 

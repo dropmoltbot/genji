@@ -1,7 +1,7 @@
 // Genji Image Translator - Popup Logic
 // =====================================
 // No login, no auth, no credits. Direct BYOK key storage in chrome.storage.
-// reverse-engineered and open-sourced by dropxtor - MIT License
+// built by dropxtor - MIT License
 
 import { TranslationCache } from "../scripts/translationCache.js"
 

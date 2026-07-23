@@ -1,13 +1,13 @@
 // Genji Image Translator - Background Service Worker
 // ===================================================
-// Open-source reverse-engineered from Torii Image Translator.
+// Open-source AI image translator.
 // NO Firebase, NO authentication, NO credits, NO server.
 // Direct BYOK (Bring Your Own Key) API calls to AI providers.
 //
 // Supported providers: Google (Gemini), OpenAI (GPT), Anthropic (Claude),
 //   OpenRouter (all providers), DeepSeek, xAI (Grok), local LLM (OpenAI-compatible).
 //
-// reverse-engineered and open-sourced by dropxtor
+// built by dropxtor
 // MIT License
 
 import { TranslationCache } from "./translationCache.js"
